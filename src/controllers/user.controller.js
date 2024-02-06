@@ -16,7 +16,7 @@ const generateAccessAndRefreshToken = async (userId) => {
         return { accessToken, refreshToken };
 
     } catch (error) {
-        throw new ApiError(500, "Something went Wrong while generating refresh and access token");
+        throw new ApiError(500, error.message);
     }
 }
 
@@ -51,7 +51,7 @@ const loginUser = asyncHandler(async (req,res) => {
 
     if(!username && !password) throw new ApiError(400 , "Username or password is not there in the request");
 
-    const user = await User.find({
+    const user = await User.findOne({
         username : username
     });
 

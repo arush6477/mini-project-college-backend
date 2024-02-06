@@ -38,7 +38,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true,
         default : "none"
-    } 
+    },
+    refreshToken :{
+        type : String
+    }
 },{timestamps : true});
 
 // hashing the password just before saving it (pre is a hook by mongoose) 
