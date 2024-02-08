@@ -123,9 +123,30 @@ const updateAvatar = asyncHandler(async(req , res) =>{
     .json(new ApiResponse(200 , deleteCloudinary , "Avatar updated sucessfully"))
 })
 
+const changePassword = asyncHandler(async(req , res) =>{
+    const {oldPassword , newPassword} = req.body
+
+    if(!oldPassword && !newPassword) throw new ApiError(400 , "old or new password is not there in the req");
+
+    if(!isPasswordCorrect(oldPassword)) throw new ApiError(200 , "password is incorrect");
+     
+    const updateDatabase = await User.findByIdAndUpdate(req.user?._id , {
+        $set : {
+            password : newPassword
+        }
+    })
+
+    if(!updateDatabase) throw new ApiError(500 , "Failed to update the database");
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200 , {} , "Password changed successfully"))
+})
+
 export {
     registerUser,
     loginUser,
     logOutUser,
-    updateAvatar
+    updateAvatar,
+    changePassword
 }

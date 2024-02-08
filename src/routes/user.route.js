@@ -9,7 +9,8 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/register").post(upload.single("avatar") ,registerUser);
+//currently not uploading the avatar image
+router.route("/register").post(upload("avatar"),registerUser);
 router.route("/login").post(loginUser);
 
 //secured routes
